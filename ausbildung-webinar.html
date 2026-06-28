@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Chhoti Si Salary Par Guzara Kyun? · German Ausbildung Webinar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#fafaf8;
+    --paper-rgb:250,250,248;
+    --ink:#0a0a0a;
+    --ink-rgb:10,10,10;
+    --grey-1:#f0f0ee;
+    --grey-2:#d4d4d2;
+    --grey-3:#737373;
+    --accent:#002FA7;
+    --accent-rgb:0,47,167;
+    --accent-on:#ffffff;
+    --accent-bright:#5B7BFF;
+    --text-primary:#0a0a0a;
+    --text-secondary:#525252;
+    --text-helper:#737373;
+    --sans:"Inter","Helvetica Neue","Helvetica","Arial",system-ui,-apple-system,sans-serif;
+    --mono:"JetBrains Mono","IBM Plex Mono","SF Mono","Consolas","Courier New",ui-monospace,monospace;
+    --sp-3:8px;--sp-4:12px;--sp-5:16px;--sp-6:24px;--sp-7:32px;--sp-8:40px;--sp-9:48px;--sp-10:64px;
+    --ease-prod:cubic-bezier(.2,0,.38,.9);
+    --ease-exp:cubic-bezier(.4,.14,.3,1);
+    --ease-entry-exp:cubic-bezier(0,0,.3,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{
+    width:100%;height:100%;overflow:hidden;
+    background:var(--paper);color:var(--ink);
+    font-family:var(--sans);
+    font-feature-settings:"ss01","cv11";
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility
+  }
+  canvas.bg{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;display:block;opacity:.55;mix-blend-mode:multiply;pointer-events:none}
+  body.dark-bg canvas.bg{mix-blend-mode:screen;opacity:.42}
+  body.low-power canvas.bg{display:none!important}
+
+  #deck{position:fixed;inset:0;width:10000vw;height:100vh;display:flex;flex-wrap:nowrap;transition:transform .9s cubic-bezier(.77,0,.175,1);z-index:10;will-change:transform}
+  .slide{
+    width:100vw;height:100vh;flex:0 0 100vw;
+    position:relative;overflow:hidden;
+    background:var(--paper);color:var(--ink);
+  }
+  .slide.grey{background:var(--grey-1)}
+  .slide.accent{background:var(--accent);color:var(--accent-on)}
+
+  .canvas-card{
+    width:100vw;height:100vh;
+    padding:5.6vh 5vw 4.4vh;
+    display:flex;flex-direction:column;
+    position:relative;overflow:hidden;
+  }
+  canvas.ascii-bg{
+    position:absolute;inset:0;width:100%;height:100%;
+    pointer-events:none;z-index:0;
+    mix-blend-mode:screen;opacity:.92;
+  }
+  .canvas-card > *:not(.ascii-bg){position:relative;z-index:1}
+
+  .chrome-min{
+    display:flex;justify-content:space-between;align-items:flex-start;
+    font-family:var(--mono);font-size:14px;font-weight:500;
+    letter-spacing:.14em;text-transform:uppercase;
+    color:var(--text-helper);flex:0 0 auto;margin-bottom:var(--sp-9);opacity:.7;
+  }
+  .slide.accent .chrome-min{color:rgba(255,255,255,.62)}
+
+  .kicker{
+    font-family:var(--mono);font-size:14px;letter-spacing:.24em;text-transform:uppercase;
+    opacity:.65;margin-bottom:2.4vh;display:inline-flex;align-items:center;gap:.8em;
+    position:relative;z-index:1
+  }
+  .kicker::before{content:"";width:24px;height:1px;background:currentColor;opacity:.6}
+  .kicker.accent{color:var(--accent);opacity:1;font-weight:600}
+  .slide.accent .kicker{color:rgba(255,255,255,.78)}
+
+  .t-meta{
+    font-family:var(--mono);font-size:14px;font-weight:500;
+    letter-spacing:.14em;text-transform:uppercase;
+    color:var(--text-helper);line-height:1.45
+  }
+
+  .lead{
+    font-weight:400;font-size:1.55vw;line-height:1.4;
+    letter-spacing:-.005em;opacity:.86
+  }
+  .lead-sub{
+    font-weight:300;font-size:1.2vw;line-height:1.5;
+    opacity:.75;
+  }
+
+  .rule{width:100%;height:1px;background:currentColor;opacity:.18;margin:0}
+  .rule.accent{background:var(--accent);opacity:1;height:2px}
+  .rule.thick{height:2px;opacity:.85}
+
+  .h-xl{font-weight:200;font-size:6vw;line-height:1;letter-spacing:-.03em}
+  .slide.accent .h-xl{color:#fff}
+
+  .stat-card{
+    display:flex;flex-direction:column;
+    gap:.6vh;align-items:flex-start;
+    padding-top:1.6vh;
+    border-top:2px solid currentColor;
+  }
+  .stat-card.accent-top{border-top-color:var(--accent);border-top-width:3px}
+  .stat-card .stat-label{
+    font-family:var(--mono);font-size:max(14px,.82vw);
+    letter-spacing:.24em;text-transform:uppercase;opacity:.6;
+  }
+  .stat-card .stat-nb{
+    font-weight:800;font-size:5.6vw;line-height:.88;
+    letter-spacing:-.035em;
+    font-feature-settings:"tnum";margin-top:.4vh;
+  }
+
+  .pipeline{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:1vw;
+  }
+  .step{
+    display:flex;flex-direction:column;gap:.6vh;
+    padding-top:1.2vh;
+    border-top:2px solid currentColor;
+  }
+  .step.accent-top{border-top-color:var(--accent);border-top-width:3px}
+  .step-nb{
+    font-family:var(--mono);font-weight:500;
+    font-size:max(14px,1vw);opacity:.5;letter-spacing:.04em
+  }
+  .step-title{
+    font-weight:700;font-size:1.4vw;
+    letter-spacing:-.01em;line-height:1.2;
+  }
+  .step-desc{
+    font-weight:400;font-size:max(16px,.94vw);
+    line-height:1.45;opacity:.7;
+  }
+
+  /* Salary comparison boxes */
+  .comparison-grid{
+    display:grid;grid-template-columns:1fr auto 1fr;
+    gap:1.6vw;align-items:center;flex:1;
+  }
+  .comp-box{
+    padding:3vh 2vw;
+    display:flex;flex-direction:column;gap:1.6vh;
+    align-items:center;text-align:center;
+  }
+  .comp-box.pk{background:var(--grey-1);color:var(--text-primary)}
+  .comp-box.de{background:var(--accent);color:var(--accent-on)}
+  .comp-box .flag{font-size:2.4vw;opacity:.7}
+  .comp-box .country{font-weight:600;font-size:1.2vw;letter-spacing:.08em;text-transform:uppercase;opacity:.6}
+  .comp-box .amount{font-weight:800;font-size:4.4vw;line-height:.88;letter-spacing:-.035em;font-feature-settings:"tnum"}
+  .comp-box .amount .currency{font-size:.35em;font-weight:400;opacity:.55;margin-right:.08em}
+  .comp-box .per{font-size:1.2vw;opacity:.6;font-weight:300}
+  .comp-box .label{font-size:max(16px,1vw);opacity:.78;line-height:1.5;margin-top:.4vh}
+  .comp-vs{
+    font-family:var(--mono);font-weight:700;font-size:1.8vw;
+    letter-spacing:.08em;color:var(--grey-3);
+  }
+
+  /* Benefit cards */
+  .benefit-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);
+    gap:1.6vw;flex:1;align-content:center;
+  }
+  .benefit-card{
+    background:var(--paper);border:1px solid var(--grey-2);
+    padding:2.4vh 1.6vw;
+    display:flex;flex-direction:column;gap:.8vh;
+  }
+  .benefit-card .icon{font-size:1.8vw;margin-bottom:.4vh}
+  .benefit-card .title{font-weight:700;font-size:1.4vw;letter-spacing:-.01em}
+  .benefit-card .desc{font-weight:400;font-size:max(15px,.9vw);line-height:1.5;opacity:.78}
+
+  /* Poll cards */
+  .poll-option{
+    background:var(--grey-1);border:2px solid transparent;
+    padding:2.4vh 1.6vw;cursor:pointer;transition:all .25s var(--ease-prod);
+    display:flex;flex-direction:column;gap:1.2vh;position:relative;
+  }
+  .poll-option:hover{border-color:var(--accent);background:rgba(0,47,167,.04)}
+  .poll-option.selected{border-color:var(--accent);background:rgba(0,47,167,.06)}
+  .poll-option .icon{font-size:2.4vw;margin-bottom:.4vh}
+  .poll-option .title{font-weight:600;font-size:1.6vw;letter-spacing:-.01em}
+  .poll-option .desc{font-size:max(14px,.92vw);line-height:1.5;opacity:.78}
+  .poll-option .check{
+    position:absolute;top:1.6vh;right:1.6vw;
+    width:24px;height:24px;border-radius:50%;border:2px solid var(--grey-2);
+    display:flex;align-items:center;justify-content:center;transition:all .25s var(--ease-prod);
+  }
+  .poll-option.selected .check{border-color:var(--accent);background:var(--accent)}
+  .poll-option.selected .check::after{content:"";width:8px;height:8px;background:var(--accent-on);clip-path:polygon(14% 44%,36% 64%,84% 14%,100% 30%,36% 100%,0 66%)}
+
+  .btn-primary{
+    display:inline-flex;align-items:center;gap:.8vw;
+    background:var(--accent);color:var(--accent-on);border:0;
+    padding:2vh 2.4vw;font-family:var(--mono);font-size:max(14px,.94vw);
+    letter-spacing:.14em;text-transform:uppercase;cursor:pointer;
+    transition:opacity .25s var(--ease-prod);text-decoration:none;
+  }
+  .btn-primary:hover{opacity:.88}
+  .btn-primary:disabled{opacity:.35;cursor:not-allowed}
+  .btn-outline{
+    background:transparent;border:1px solid rgba(255,255,255,.4);
+    color:var(--accent-on);
+  }
+
+  .pulse-dot{
+    display:inline-block;width:8px;height:8px;border-radius:50%;
+    background:var(--accent);margin-right:.6vw;vertical-align:middle;
+    animation:pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.35;transform:scale(.75)}}
+
+  .feedback{display:none;padding:1.6vh 1.6vw;margin-top:2vh;font-size:max(14px,.92vw);line-height:1.5}
+  .feedback.show{display:block}
+  .feedback.ok{background:rgba(0,47,167,.08);border-left:3px solid var(--accent);color:var(--text-primary)}
+  .feedback.err{background:rgba(255,107,53,.1);border-left:3px solid #FF6B35;color:var(--text-primary)}
+
+  .progress-bar{position:fixed;top:0;left:0;width:100%;height:3px;z-index:50;background:rgba(0,0,0,.06)}
+  .progress-bar .fill{height:100%;background:var(--accent);transition:width .7s var(--ease-exp)}
+
+  #nav{position:fixed;left:50%;bottom:2vh;transform:translateX(-50%);z-index:30;display:flex;gap:10px;padding:0;background:transparent;border:0}
+  #nav .dot{width:6px;height:6px;background:rgba(0,0,0,.28);cursor:pointer;transition:all .25s ease;border:0;padding:0;border-radius:0}
+  #nav .dot:hover{background:rgba(0,0,0,.55)}
+  #nav .dot.active{background:var(--accent);width:18px}
+  body.dark-bg #nav .dot{background:rgba(255,255,255,.32)}
+  body.dark-bg #nav .dot.active{background:var(--accent)}
+
+  body.low-power #deck{transition:none!important}
+  body.low-power *{animation:none!important;transition:none!important}
+  body.low-power [data-anim]{opacity:1!important;transform:none!important}
+
+  @media (max-width:900px){
+    .canvas-card{padding:2.4vh 4vw 3vh}
+    .chrome-min{margin-bottom:var(--sp-5)}
+    .h-xl{font-size:7vw;margin-bottom:1.2vh!important}
+    .lead{font-size:2.8vw;line-height:1.3}
+    .lead-sub{font-size:2.4vw}
+    .pipeline{grid-template-columns:repeat(2,1fr);gap:2vw}
+    .step{padding-top:.8vh;gap:.4vh}
+    .step-title{font-size:2.6vw}
+    .step-desc{font-size:2vw;line-height:1.3}
+    .comparison-grid{grid-template-columns:1fr!important;gap:2vh}
+    .comp-vs{font-size:4vw;padding:.4vh 0}
+    .comp-box{padding:1.6vh 3vw}
+    .comp-box .amount{font-size:6vw}
+    .comp-box [style*="font-weight:700"]{font-size:3vw!important}
+    .comp-box [style*="display:flex;align-items:center;gap"]{font-size:2.6vw!important;gap:1.2vw}
+    .comp-box .rule{margin-bottom:.6vh!important}
+    .comp-vs{order:-1}
+    .benefit-grid{grid-template-columns:1fr;gap:1.2vh}
+    .benefit-card{padding:1.2vh 3vw}
+    .benefit-card .icon{font-size:3.5vw;margin-bottom:0}
+    .benefit-card .title{font-size:2.6vw}
+    .benefit-card .desc{font-size:2.2vw;line-height:1.3}
+    .poll-option .title{font-size:2.8vw}
+    .poll-option .icon{font-size:4vw}
+    .poll-option .desc{font-size:2.2vw}
+    .btn-primary{padding:1.2vh 3.2vw;font-size:2.4vw}
+    .kicker{margin-bottom:1.2vh}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="fill" id="progress" style="width:0%"></div></div>
+
+<div id="deck">
+
+<!-- ============ SLIDE 1 · HOOK ============ -->
+<section class="slide accent" data-animate="hero">
+  <div class="canvas-card">
+    <canvas class="ascii-bg" aria-hidden="true"></canvas>
+    <div class="chrome-min">
+      <div class="l">German Care Academy</div>
+      <div class="r">01/06</div>
+    </div>
+    <div style="flex:1;display:grid;grid-template-rows:1fr auto;gap:2.6vh">
+      <div style="align-self:center;text-align:center">
+        <div data-anim="kicker" class="t-meta" style="color:rgba(255,255,255,.62);letter-spacing:.22em;text-align:center;justify-content:center">GERMANY AUSBILDUNG PROGRAM</div>
+        <h1 data-anim="title" style="font-weight:200;font-size:min(12vw,20vh);line-height:.92;letter-spacing:-.035em;color:#fff;margin:1.6vh 0">Chhoti Si<br/>Salary Par<br/><span style="font-style:italic;font-weight:300;color:rgba(255,255,255,.85)">Guzara Kyun?</span></h1>
+        <div data-anim="sub" style="font-weight:300;font-size:max(18px,1.8vw);color:rgba(255,255,255,.72);margin-top:1vh">Ya job hi nahi hai? Dono suraton mein yeh aapke liye hai.</div>
+      </div>
+      <div data-anim="bottom" style="border-top:1px solid rgba(255,255,255,.18);padding-top:2vh">
+        <div class="lead" style="color:rgba(255,255,255,.84);margin-bottom:1.2vh;font-size:1.8vw">Apne mustaqbil ko ek bara mauqa dein. Germany mein apna career banayein.</div>
+        <div style="display:flex;justify-content:space-between;align-items:end">
+          <div class="t-meta" style="color:rgba(255,255,255,.6)"><span class="pulse-dot"></span>Free interactive session</div>
+          <div class="t-meta" style="color:rgba(255,255,255,.6)">→ arrow keys / swipe</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 2 · REALITY CHECK · Aaj kya hai vs Kya ho sakta hai ============ -->
+<section class="slide" data-animate="comparison">
+  <div class="canvas-card">
+    <div class="chrome-min">
+      <div class="l">Aaj vs Kal</div>
+      <div class="r">02/06</div>
+    </div>
+    <div data-anim="line" class="kicker accent">SACH SACH BATAIYE</div>
+    <h2 class="h-xl" data-anim="line" style="margin-bottom:1.2vh">Aaj kya hai —<br/>aur kya <span style="color:var(--accent)">ho sakta</span> hai?</h2>
+    <div class="comparison-grid" style="grid-template-columns:1fr auto 1fr">
+      <div class="comp-box pk" style="border-top:3px solid var(--grey-2);padding:2vh 2vw">
+        <div style="font-weight:700;font-size:1.8vw;letter-spacing:-.01em;margin-bottom:.4vh">Aaj: Pakistan Mein</div>
+        <div class="rule" style="margin-bottom:.8vh"></div>
+        <div style="width:100%;display:flex;flex-direction:column;gap:.8vh;text-align:left">
+          <div style="display:flex;align-items:center;gap:.8vw;font-size:max(15px,1.1vw);line-height:1.4"><span style="color:var(--grey-3);font-size:1.4vw">✗</span> Job nahi hai — zero income, ghar walon par bojh</div>
+          <div style="display:flex;align-items:center;gap:.8vw;font-size:max(15px,1.1vw);line-height:1.4"><span style="color:var(--grey-3);font-size:1.4vw">✗</span> Ya 25-40K ki job — mahina khatam hone se pehle paisa khatam</div>
+          <div style="display:flex;align-items:center;gap:.8vw;font-size:max(15px,1.1vw);line-height:1.4"><span style="color:var(--grey-3);font-size:1.4vw">✗</span> Savings? Koi future planning? Mumkin nahi</div>
+          <div style="display:flex;align-items:center;gap:.8vw;font-size:max(15px,1.1vw);line-height:1.4"><span style="color:var(--grey-3);font-size:1.4vw">✗</span> Koi guarantee nahi ke kal ko bhi job rahegi</div>
+        </div>
+      </div>
+      <div class="comp-vs">VS</div>
+      <div class="comp-box de" style="border-top:3px solid var(--accent-bright);padding:2vh 2vw">
+        <div style="font-weight:700;font-size:1.8vw;letter-spacing:-.01em;margin-bottom:.4vh">Kal: Germany Ausbildung Program</div>
+        <div class="rule" style="margin-bottom:.8vh;background:rgba(255,255,255,.2)"></div>
+        <div style="width:100%;display:flex;flex-direction:column;gap:.8vh;text-align:left">
+          <div style="display:flex;align-items:center;gap:.8vw;font-size:max(15px,1.1vw);line-height:1.4"><span style="color:rgba(255,255,255,.7);font-size:1.4vw">✓</span> <strong>Rs. 4 Lakh/month</strong> stipend while studying + higher salary later</div>
+          <div style="display:flex;align-items:center;gap:.8vw;font-size:max(15px,1.1vw);line-height:1.4"><span style="color:rgba(255,255,255,.7);font-size:1.4vw">✓</span> Zero fees — <strong>free education + training</strong></div>
+          <div style="display:flex;align-items:center;gap:.8vw;font-size:max(15px,1.1vw);line-height:1.4"><span style="color:rgba(255,255,255,.7);font-size:1.4vw">✓</span> Zero blocked account — koi paisa block nahi</div>
+          <div style="display:flex;align-items:center;gap:.8vw;font-size:max(15px,1.1vw);line-height:1.4"><span style="color:rgba(255,255,255,.7);font-size:1.4vw">✓</span> Official contract — job guaranteed + European qualification</div>
+        </div>
+      </div>
+    </div>
+    <div class="rule" style="margin-top:2vh"></div>
+    <div style="display:flex;justify-content:space-between;margin-top:1.6vh">
+      <div class="t-meta" style="color:var(--accent);font-weight:600">Farq sirf ek decision ka hai</div>
+      <div class="t-meta" style="opacity:.6">Stipend: €1,200-1,400/mo · PKR 3.8-4.5 Lakh</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 3 · OBJECTIONS ANSWERED ============ -->
+<section class="slide grey" data-animate="benefits">
+  <div class="canvas-card">
+    <div class="chrome-min">
+      <div class="l">Sawaal Jawab</div>
+      <div class="r">03/06</div>
+    </div>
+    <div data-anim="line" class="kicker accent">AAPKE ZEHN MEIN JO SAWAAL HAIN</div>
+    <h2 class="h-xl" data-anim="line" style="margin-bottom:1.6vh">"Mujhe lagta hai yeh<br/><span style="color:var(--accent)">mumkin nahi</span>"</h2>
+    <div class="benefit-grid">
+      <div class="benefit-card">
+        <div class="icon">😕</div>
+        <div class="title">"Mere paas paise nahi hain"</div>
+        <div class="desc">Study visa ke liye lakhon rupaye bank me block krne ki zaroorat nahi.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="icon">😟</div>
+        <div class="title">"Fees afford nahi hogi"</div>
+        <div class="desc"><strong>Free education + training.</strong> German govt aur hospital poora kharcha uthate hain. Aapko ek bhi rupiya nahi dena. <strong>Earn while you learn</strong> — Rs. 4 Lakh/month stipend.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="icon">🤔</div>
+        <div class="title">"Job guarantee kya hai?"</div>
+        <div class="desc"><strong>Official German Ausbildung Contract.</strong> Legal contract — stipend, training duration, job placement sab likha hota hai. EU mein recognized qualification.</div>
+      </div>
+      <div class="benefit-card">
+        <div class="icon">😰</div>
+        <div class="title">"Germany jaana mushkil hoga"</div>
+        <div class="desc"><strong>A1 se B2 level language classes</strong>... Aapko bas German language seekhni hy. Humaray expert teachers aapko German language me train karenge aur aapka ye kaam bhi asaan kr denge.</div>
+      </div>
+    </div>
+    <div style="margin-top:auto;padding-top:1.2vh;border-top:1px solid var(--grey-2);display:flex;justify-content:space-between">
+      <div class="t-meta" style="color:var(--accent);font-weight:600">Zero investment. Zero risk. Sirf aapka time aur mehnat.</div>
+      <div class="t-meta">Ausbildung = European qualification</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 4 · PATHWAY · Yeh raha aapka safar ============ -->
+<section class="slide" data-animate="pathway">
+  <div class="canvas-card">
+    <div class="chrome-min">
+      <div class="l">Safar</div>
+      <div class="r">04/06</div>
+    </div>
+    <div data-anim="line" class="kicker accent">8 MAHINE KA INTENSIVE PROGRAM</div>
+    <h2 class="h-xl" data-anim="line" style="margin-bottom:1.2vh">Sirf <span style="color:var(--accent)">8 months</span> mein<br/>German B2 — phir Germany!</h2>
+    <p class="lead" style="margin-bottom:1.6vh;opacity:.75">Fast-track intensive program. Har level 2 months — focused, immersive, result-oriented.</p>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+      <div class="pipeline">
+        <div class="step accent-top">
+          <div class="step-nb">01 · Months 1-2</div>
+          <div class="step-title">German A1 — Intensive</div>
+          <div class="step-desc">Online classes, native teachers Daily sessions. No prior German needed.</div>
+        </div>
+        <div class="step accent-top">
+          <div class="step-nb">02 · Months 3-4</div>
+          <div class="step-title">German A2 — Intensive</div>
+          <div class="step-desc">Rozmarra ki baat cheet. Speaking practice. Aap express karna start karein ge.</div>
+        </div>
+        <div class="step accent-top">
+          <div class="step-nb">03 · Months 5-6</div>
+          <div class="step-title">German B1 — Intensive</div>
+          <div class="step-desc">Intermediate. Healthcare vocabulary + nursing terms. Hospital communication.</div>
+        </div>
+        <div class="step accent-top">
+          <div class="step-nb">04 · Months 7-8</div>
+          <div class="step-title">German B2 — Intensive</div>
+          <div class="step-desc">Professional proficiency. Exam prep + nursing terminology. <strong>Entry ticket to Germany.</strong></div>
+        </div>
+        <div class="step accent-top">
+          <div class="step-nb">05 · Month 9+</div>
+          <div class="step-title">Welcome to Germany!</div>
+          <div class="step-desc">Paid Ausbildung starts. Rs. 4 Lakh/month stipend. Career officially starts.</div>
+        </div>
+      </div>
+      <div style="margin-top:2.4vh;display:flex;justify-content:space-between;align-items:center">
+        <div class="t-meta" style="color:var(--accent);font-weight:600">⏱ Aaj join kiya → 8 months mein B2, phir Germany</div>
+        <div class="t-meta">Next batch: July 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 5 · INTERACTIVE POLL ============ -->
+<section class="slide" data-animate="poll">
+  <div class="canvas-card">
+    <div class="chrome-min">
+      <div class="l">Aapki Choice</div>
+      <div class="r">05/06</div>
+    </div>
+    <div data-anim="line" class="kicker accent">EK AAKHIRI SAWAAL</div>
+    <h2 class="h-xl" data-anim="line" style="margin-bottom:1.2vh">Germany mein nursing ka<br/><span style="color:var(--accent)">kaunsa field</span><br/>aapko pasand hai?</h2>
+    <p class="lead" style="margin-bottom:2.4vh;opacity:.75">Teeno fields mein demand hai, lekin aapki choice ke hisaab se hum aapko tailored guidance dein ge. Koi galat jawab nahi hai — jo aapko suit kare, woh choose karein.</p>
+    <div style="flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:1.6vw" id="poll-container">
+      <div class="poll-option" data-value="altenpflege" onclick="selectPoll(this)">
+        <div class="check"></div>
+        <div class="icon">👴</div>
+        <div class="title">Altenpflege</div>
+        <div class="desc">Buzurgon ki dekhbhal. Germany mein <strong>sabse zyada demand</strong>. Old homes, home care. Agar aapko logo ki khidmat karna pasand hai toh yeh aapka field hai.</div>
+      </div>
+      <div class="poll-option" data-value="krankenpflege" onclick="selectPoll(this)">
+        <div class="check"></div>
+        <div class="icon">🏥</div>
+        <div class="title">Krankenpflege</div>
+        <div class="desc">General nursing — hospitals, clinics, emergency. <strong>Sabse versatile option.</strong> Aage chal ke specialization ke bhi mauqe (ICU, OT, dialysis).</div>
+      </div>
+      <div class="poll-option" data-value="kinderkrankenpflege" onclick="selectPoll(this)">
+        <div class="check"></div>
+        <div class="icon">👶</div>
+        <div class="title">Kinderkrankenpflege</div>
+        <div class="desc">Bachchon ki nursing. Pediatric hospitals, neonatal wards. <strong>Emotionally rewarding</strong> — agar aapko bachchon ke saath kaam karna achha lagta hai.</div>
+      </div>
+    </div>
+    <div class="feedback" id="poll-feedback"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:2vh">
+      <div class="t-meta" id="poll-status">Koi bhi field select karein, koi galat jawab nahi</div>
+      <button class="btn-primary" id="poll-continue" disabled onclick="submitPoll()">Select kiya? Agla Step →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 6 · CTA · Ab action lene ka time ============ -->
+<section class="slide accent" data-animate="cta">
+  <div class="canvas-card">
+    <canvas class="ascii-bg" aria-hidden="true"></canvas>
+    <div class="chrome-min">
+      <div class="l">Action</div>
+      <div class="r">06/06</div>
+    </div>
+    <div style="flex:1;display:grid;grid-template-rows:auto 1fr auto;gap:2.6vh">
+      <div data-anim="kicker" class="t-meta" style="color:rgba(255,255,255,.78);letter-spacing:.22em">YEH AAPKA MAUQA HAI</div>
+      <div style="align-self:center;text-align:center">
+        <h1 data-anim="title" style="font-weight:200;font-size:min(9vw,16vh);line-height:.94;letter-spacing:-.025em;color:#fff;margin-bottom:2.4vh">Sirf <span style="font-style:italic;font-weight:300">9+ mahinon</span> mein<br/>aap Germany mein</h1>
+        <p data-anim="bottom" class="lead" style="color:rgba(255,255,255,.82);max-width:56ch;margin:0 auto 2.4vh">Free 1-on-1 consultation mein hum aapki eligibility check karein ge, aapke sawaalon ke jawab dein ge, aur aapko ek clear roadmap dein ge. <strong>Zero commitment. Sirf 20 minute.</strong></p>
+        <div data-anim="bottom" style="display:flex;gap:1.6vw;justify-content:center;flex-wrap:wrap">
+          <a class="btn-primary" style="background:var(--accent-on);color:var(--accent);font-weight:600" href="https://wa.me/923315550505?text=COFFEE" target="_blank" rel="noopener">📅 Free Consultation Book Karein</a>
+          <a class="btn-primary btn-outline" href="https://wa.me/923315550505?text=COFFEE" target="_blank" rel="noopener">💬 Abhi WhatsApp Karein — Fauran Jawaab</a>
+        </div>
+        <div data-anim="bottom" class="t-meta" style="color:rgba(255,255,255,.55);margin-top:2vh">Ya phir dubara slides dekhein (ESC key) — jo bhi aapko suit kare</div>
+      </div>
+      <div data-anim="foot" style="display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,.18);padding-top:2vh">
+        <div class="t-meta" style="color:rgba(255,255,255,.55)"></div>
+        <div class="t-meta" style="color:rgba(255,255,255,.55)">Next batch: July 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<div id="nav"></div>
+
+<canvas id="bg-grid" class="bg"></canvas>
+<div id="hint" style="position:fixed;bottom:2.4vh;right:2.5vw;z-index:30;font-family:var(--mono);font-size:14px;letter-spacing:.14em;text-transform:uppercase;opacity:.4">← → Navigate · B Static · ESC Overview</div>
+
+<script>
+// === Low Power Mode ===
+(function(){
+  const KEY = 'guizang-ppt-low-power';
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const stored = localStorage.getItem(KEY);
+  window.__lowPowerMode = stored === '1' || (stored === null && reduced);
+  window.__setLowPowerMode = function(on, opts={}){
+    window.__lowPowerMode = !!on;
+    document.body.classList.toggle('low-power', window.__lowPowerMode);
+    if(opts.persist !== false) localStorage.setItem(KEY, window.__lowPowerMode ? '1' : '0');
+    dispatchEvent(new CustomEvent('swiss-low-power-change', {detail:{on:window.__lowPowerMode}}));
+  };
+  document.body.classList.toggle('low-power', window.__lowPowerMode);
+})();
+
+// === WebGL Background ===
+const VS = `attribute vec2 position;void main(){gl_Position=vec4(position,0.0,1.0);}`;
+const FS = `precision highp float;
+uniform vec2 u_resolution;uniform float u_time;uniform vec2 u_mouse;uniform float u_dark;uniform vec3 u_accent;
+float gridLine(vec2 uv,float spacing,float thickness){vec2 g=abs(fract(uv/spacing)-0.5);float d=min(g.x,g.y);return 1.0-smoothstep(thickness-0.005,thickness+0.005,d);}
+void main(){
+  vec2 uv=gl_FragCoord.xy/u_resolution.xy;float aspect=u_resolution.x/u_resolution.y;vec2 p=uv;p.x*=aspect;
+  vec2 drift=vec2(u_time*0.008,u_time*0.005);vec2 gp=p+drift;
+  float mainGrid=gridLine(gp,0.12,0.012);float subGrid=gridLine(gp,0.024,0.04)*0.4;
+  vec2 m=u_mouse;m.x*=aspect;float md=length(p-m);float mInfluence=exp(-md*4.0)*0.5;
+  float gridStrength=(mainGrid+subGrid*0.5)*(0.45+mInfluence);
+  vec2 dotGrid=fract(gp*50.0)-0.5;float dotMask=1.0-smoothstep(0.05,0.14,length(dotGrid));
+  float wave=sin(gp.x*1.4+u_time*0.15)*cos(gp.y*1.6-u_time*0.12);dotMask*=smoothstep(-0.3,0.6,wave)*0.6;
+  vec3 lineColor=mix(vec3(0.08),vec3(0.92),u_dark);vec3 bgColor=mix(vec3(0.97,0.97,0.96),vec3(0.06,0.06,0.07),u_dark);
+  vec3 col=bgColor;col=mix(col,lineColor,gridStrength*0.55);col=mix(col,lineColor,dotMask*0.35);col=mix(col,u_accent,mInfluence*0.18);
+  gl_FragColor=vec4(col,1.0);
+}`;
+const mouse={x:0.5,y:0.5};
+addEventListener('mousemove',e=>{mouse.x=e.clientX/innerWidth;mouse.y=1-e.clientY/innerHeight});
+function bootGL(canvasId,fsSrc){
+  const canvas=document.getElementById(canvasId);const gl=canvas.getContext('webgl',{alpha:true,antialias:true,premultipliedAlpha:false});
+  if(!gl) return ()=>false;
+  const mk=(t,s)=>{const sh=gl.createShader(t);gl.shaderSource(sh,s);gl.compileShader(sh);return sh};
+  const prog=gl.createProgram();gl.attachShader(prog,mk(gl.VERTEX_SHADER,VS));gl.attachShader(prog,mk(gl.FRAGMENT_SHADER,fsSrc));
+  gl.linkProgram(prog);gl.useProgram(prog);
+  const buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);
+  const pos=gl.getAttribLocation(prog,'position');gl.enableVertexAttribArray(pos);gl.vertexAttribPointer(pos,2,gl.FLOAT,false,0,0);
+  const lRes=gl.getUniformLocation(prog,'u_resolution');const lT=gl.getUniformLocation(prog,'u_time');
+  const lM=gl.getUniformLocation(prog,'u_mouse');const lD=gl.getUniformLocation(prog,'u_dark');const lA=gl.getUniformLocation(prog,'u_accent');
+  const resize=()=>{const d=Math.min(window.devicePixelRatio||1,2);canvas.width=innerWidth*d;canvas.height=innerHeight*d;gl.viewport(0,0,canvas.width,canvas.height);};
+  addEventListener('resize',resize);resize();
+  function readAccent(){const cs=getComputedStyle(document.documentElement);const hex=cs.getPropertyValue('--accent').trim()||'#002FA7';const m=hex.match(/^#([0-9a-f]{6})$/i);if(!m)return[0,0.18,0.65];const n=parseInt(m[1],16);return[((n>>16)&255)/255,((n>>8)&255)/255,(n&255)/255];}
+  let accent=readAccent();let dark=0;
+  return(tSec,isDark)=>{if(isDark!==undefined)dark=isDark?1:0;accent=readAccent();gl.uniform2f(lRes,canvas.width,canvas.height);gl.uniform1f(lT,tSec);gl.uniform2f(lM,mouse.x,mouse.y);gl.uniform1f(lD,dark);gl.uniform3f(lA,accent[0],accent[1],accent[2]);gl.drawArrays(gl.TRIANGLES,0,6);return true;};
+}
+let darkMode=false,gridCtrl=null,gridRAF=0,gridT0=Date.now();
+function startGrid(){if(window.__lowPowerMode||gridRAF)return;if(!gridCtrl)gridCtrl=bootGL('bg-grid',FS);if(!gridCtrl)return;gridT0=Date.now();function loop(){const t=(Date.now()-gridT0)/1000;gridCtrl(t,darkMode);gridRAF=requestAnimationFrame(loop);}gridRAF=requestAnimationFrame(loop);}
+function stopGrid(){if(gridRAF)cancelAnimationFrame(gridRAF);gridRAF=0}
+startGrid();addEventListener('swiss-low-power-change',e=>{e.detail.on?stopGrid():startGrid();});
+
+// === Navigation ===
+const deck=document.getElementById('deck');const slides=deck.querySelectorAll('.slide');const nav=document.getElementById('nav');
+let idx=0,total=slides.length,lock=false;
+deck.style.width=(total*100)+'vw';
+slides.forEach((s,i)=>{const b=document.createElement('button');b.className='dot';b.dataset.i=i;b.setAttribute('aria-label','Page '+(i+1));b.onclick=()=>go(i);nav.appendChild(b);});
+function go(n){if(lock)return;idx=Math.max(0,Math.min(total-1,n));window.__currentSlideIndex=idx;deck.style.transform=`translateX(${-idx*100}vw)`;nav.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
+const el=slides[idx];const isDark=el.classList.contains('dark')||el.classList.contains('accent');document.body.classList.toggle('dark-bg',isDark);darkMode=isDark;document.getElementById('progress').style.width=((idx+1)/total*100)+'%';if(window.__playSlide)setTimeout(()=>window.__playSlide(idx),450);lock=true;setTimeout(()=>lock=false,700);}
+
+// === ESC Overview ===
+let overviewOn=false;const ov=document.createElement('div');ov.id='overview';ov.style.cssText='position:fixed;inset:0;z-index:100;background:rgba(250,250,248,.96);backdrop-filter:blur(12px);display:none;overflow-y:auto;padding:4vh 4vw';document.body.appendChild(ov);
+function buildOverview(){ov.innerHTML='';const g=document.createElement('div');g.style.cssText='display:grid;grid-template-columns:repeat(4,1fr);gap:2vh 1.6vw;max-width:90vw;margin:0 auto';slides.forEach((s,i)=>{const c=document.createElement('div');c.style.cssText='cursor:pointer;overflow:hidden;border:2px solid '+(i===idx?'var(--accent)':'rgba(0,0,0,.12)');c.onmouseenter=()=>c.style.borderColor='rgba(0,0,0,.4)';c.onmouseleave=()=>c.style.borderColor=i===idx?'var(--accent)':'rgba(0,0,0,.12)';const w=document.createElement('div');const d=s.classList.contains('dark')||s.classList.contains('accent');w.style.cssText='width:100%;aspect-ratio:16/9;overflow:hidden;position:relative;pointer-events:none;background:'+(d?'var(--ink)':'var(--paper)');const cl=s.cloneNode(true);cl.style.cssText='width:100vw;height:100vh;transform:scale('+(1/4.5)+');transform-origin:top left;position:absolute;top:0;left:0;pointer-events:none';w.appendChild(cl);const lb=document.createElement('div');lb.style.cssText='padding:6px 10px;font-family:var(--mono);font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);opacity:.7';lb.textContent=(i+1)+' / '+total;c.appendChild(w);c.appendChild(lb);c.onclick=()=>{toggleOverview();go(i)};g.appendChild(c);});ov.appendChild(g);}
+function toggleOverview(){overviewOn=!overviewOn;if(overviewOn){buildOverview();ov.style.display='block';}else{ov.style.display='none';}}
+addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();toggleOverview();return;}if(e.key.toLowerCase()==='b'&&!e.metaKey&&!e.ctrlKey&&!e.altKey){e.preventDefault();window.__setLowPowerMode(!window.__lowPowerMode);return;}if(overviewOn)return;if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '||e.key==='ArrowDown'){go(idx+1);return;}if(e.key==='ArrowLeft'||e.key==='PageUp'||e.key==='ArrowUp')go(idx-1);if(e.key==='Home')go(0);if(e.key==='End')go(total-1);});
+let wheelAcc=0;addEventListener('wheel',e=>{wheelAcc+=e.deltaY+e.deltaX;if(Math.abs(wheelAcc)>50){go(idx+(wheelAcc>0?1:-1));wheelAcc=0;}clearTimeout(window._whTO);window._whTO=setTimeout(()=>wheelAcc=0,150);},{passive:true});
+let tx=0,ty=0;addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;const dy=e.changedTouches[0].clientY-ty;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy))go(idx+(dx<0?1:-1));},{passive:true});
+go(0);
+</script>
+
+<!-- ASCII Breathing Field -->
+<script>
+(function(){const canvases=[...document.querySelectorAll('canvas.ascii-bg')];if(!canvases.length)return;const PALETTE='   ...:::---+++***...........';const CELL=16;const FONT_SIZE=13;
+function setup(c){const dpr=Math.min(window.devicePixelRatio||1,2);const rect=c.getBoundingClientRect();if(rect.width<4||rect.height<4)return false;c.width=Math.round(rect.width*dpr);c.height=Math.round(rect.height*dpr);c.__dpr=dpr;c.__w=rect.width;c.__h=rect.height;const ctx=c.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);ctx.font='500 '+FONT_SIZE+'px '+(getComputedStyle(document.documentElement).getPropertyValue('--mono')||'JetBrains Mono, monospace').trim();ctx.textBaseline='top';c.__ctx=ctx;return true;}
+function draw(c,t){if(!c.__ctx)return;const ctx=c.__ctx,w=c.__w,h=c.__h;ctx.clearRect(0,0,w,h);const cols=Math.ceil(w/CELL),rows=Math.ceil(h/CELL);for(let r=0;r<rows;r++){for(let cc=0;cc<cols;cc++){const n=(Math.sin(cc*0.18+t)+Math.sin(r*0.24-t*0.7)+Math.sin((cc+r)*0.12+t*0.45)+Math.sin(Math.hypot(cc-cols*0.5,r-rows*0.5)*0.16-t*0.55))/4;const v=(n+1)/2;if(v<0.22)continue;const idx=Math.min(PALETTE.length-1,Math.floor(v*PALETTE.length));const ch=PALETTE[idx];if(ch===' ')continue;ctx.fillStyle=`rgba(255,255,255,${(0.08+(v-0.22)*0.55).toFixed(3)})`;ctx.fillText(ch,cc*CELL,r*CELL);}}}
+function resizeAll(){canvases.forEach(setup);}let pending=null;window.addEventListener('resize',()=>{if(window.__lowPowerMode)return;if(pending)cancelAnimationFrame(pending);pending=requestAnimationFrame(resizeAll);},{passive:true});
+let t0=performance.now(),frame=0,asciiRAF=0,running=false;function tick(now){if(!running||window.__lowPowerMode){running=false;asciiRAF=0;return;}const t=(now-t0)/1000*0.55;frame++;canvases.forEach(c=>{const slide=c.closest('.slide');const rect=slide?slide.getBoundingClientRect():null;const onscreen=rect&&rect.right>0&&rect.left<window.innerWidth;if(!onscreen&&(frame&3)!==0)return;draw(c,t);});asciiRAF=requestAnimationFrame(tick);}
+function start(){if(running||window.__lowPowerMode)return;resizeAll();t0=performance.now();frame=0;running=true;asciiRAF=requestAnimationFrame(tick);}function stop(){running=false;if(asciiRAF)cancelAnimationFrame(asciiRAF);if(pending)cancelAnimationFrame(pending);asciiRAF=0;pending=null;canvases.forEach(c=>{if(c.__ctx)c.__ctx.clearRect(0,0,c.__w||0,c.__h||0);});}
+addEventListener('swiss-low-power-change',e=>{e.detail.on?stop():start();});start();})();
+</script>
+
+<!-- Motion One Animations -->
+<script type="module">
+let motion;
+try{motion=await import('./.opencode/skills/guizang-ppt-skill/assets/motion.min.js');}catch(e1){try{motion=await import('https://cdn.jsdelivr.net/npm/motion@11.11.17/+esm');}catch(e2){console.warn('[motion] failed');document.querySelectorAll('[data-anim]').forEach(el=>{el.style.opacity='1';el.style.transform='none'});}}
+if(motion){const{animate}=motion;const EASE_PROD=[.2,0,.38,.9];const EASE_ENTRY_EXP=[0,0,.3,1];const slideEls=[...document.querySelectorAll('.slide')];let lastIdx=-1;
+function resetAnims(slide){slide.querySelectorAll('[data-anim]').forEach(el=>{el.style.opacity='';el.style.transform='';});}
+const fade=(el,opts={})=>animate(el,{opacity:[0,1],y:[opts.y??12,0]},{duration:opts.duration??.6,delay:opts.delay??0,easing:opts.easing??EASE_ENTRY_EXP});
+
+function rHero(slide,all){const chrome=slide.querySelector('.chrome-min');if(chrome)animate(chrome,{opacity:[0,1]},{duration:.24,easing:EASE_PROD});const kicker=slide.querySelector('[data-anim="kicker"]');if(kicker)fade(kicker,{delay:.15,duration:.4,y:8});const title=slide.querySelector('[data-anim="title"]');if(title)animate(title,{opacity:[0,1],y:[24,0]},{duration:.8,delay:.3,easing:EASE_ENTRY_EXP});const bottom=slide.querySelector('[data-anim="bottom"]');if(bottom)fade(bottom,{delay:.8,duration:.5,y:10});}
+
+function rComparison(slide,all){const line=slide.querySelector('[data-anim="line"]');if(line)fade(line,{duration:.5,y:8});const pk=slide.querySelector('.comp-box.pk');if(pk)animate(pk,{opacity:[0,1],x:[-24,0]},{duration:.6,delay:.35,easing:EASE_ENTRY_EXP});const vs=slide.querySelector('.comp-vs');if(vs)fade(vs,{delay:.55,duration:.4});const de=slide.querySelector('.comp-box.de');if(de)animate(de,{opacity:[0,1],x:[24,0]},{duration:.6,delay:.7,easing:EASE_ENTRY_EXP});}
+
+function rBenefits(slide,all){const line=slide.querySelector('[data-anim="line"]');if(line)fade(line,{duration:.5,y:8});const cards=[...slide.querySelectorAll('.benefit-card')];cards.forEach((c,i)=>{animate(c,{opacity:[0,1],y:[18,0]},{duration:.55,delay:.35+i*.1,easing:EASE_ENTRY_EXP});});}
+
+function rPathway(slide,all){const line=slide.querySelector('[data-anim="line"]');if(line)fade(line,{duration:.5,y:8});const steps=[...slide.querySelectorAll('.step')];steps.forEach((s,i)=>{animate(s,{opacity:[0,1],y:[14,0]},{duration:.5,delay:.3+i*.1,easing:EASE_ENTRY_EXP});});}
+
+function rPoll(slide,all){const line=slide.querySelector('[data-anim="line"]');if(line)fade(line,{duration:.5,y:6});const opts=[...slide.querySelectorAll('.poll-option')];opts.forEach((el,i)=>{animate(el,{opacity:[0,1],y:[20,0]},{duration:.55,delay:.5+i*.1,easing:EASE_ENTRY_EXP});});}
+
+function rCta(slide,all){const chrome=slide.querySelector('.chrome-min');if(chrome)animate(chrome,{opacity:[0,1]},{duration:.24,easing:EASE_PROD});const kicker=slide.querySelector('[data-anim="kicker"]');if(kicker)fade(kicker,{delay:.15,duration:.4,y:8});const title=slide.querySelector('[data-anim="title"]');if(title)animate(title,{opacity:[0,1],y:[24,0]},{duration:.85,delay:.3,easing:EASE_ENTRY_EXP});const bottom=[...slide.querySelectorAll('[data-anim="bottom"]')];bottom.forEach((el,i)=>{animate(el,{opacity:[0,1],y:[20,0]},{duration:.6,delay:.8+i*.12,easing:EASE_ENTRY_EXP});});const foot=slide.querySelector('[data-anim="foot"]');if(foot)animate(foot,{opacity:[0,1]},{duration:.3,delay:1.2,easing:EASE_PROD});}
+
+const RECIPES={'hero':rHero,'comparison':rComparison,'benefits':rBenefits,'pathway':rPathway,'poll':rPoll,'cta':rCta};
+
+function revealStatic(slide){resetAnims(slide);document.getAnimations?.().forEach(a=>a.cancel());slide.querySelectorAll('[data-anim],.stat-card,.benefit-card,.step,.poll-option,.comp-box,.comp-vs').forEach(el=>{el.style.opacity='1';el.style.transform='none';});}
+function playSlide(i){const slide=slideEls[i];if(!slide)return;lastIdx=i;if(window.__lowPowerMode){revealStatic(slide);return;}resetAnims(slide);slide.querySelectorAll('[data-anim]').forEach(el=>{el.style.opacity='1';el.style.transform='none';});const all=[...slide.querySelectorAll('[data-anim]')];const recipe=slide.dataset.animate;const fn=RECIPES[recipe];if(fn){fn(slide,all);return;}if(all.length)animate(all,{opacity:[0,1],y:[12,0]},{duration:.6,delay:i=>i*.08,easing:EASE_ENTRY_EXP});}
+window.__playSlide=playSlide;playSlide(window.__currentSlideIndex||0);}
+</script>
+
+<script>
+// === Interactive Poll ===
+let selectedPoll = null;
+function selectPoll(el){document.querySelectorAll('.poll-option').forEach(o=>o.classList.remove('selected'));el.classList.add('selected');selectedPoll=el.dataset.value;document.getElementById('poll-continue').disabled=false;document.getElementById('poll-status').textContent='✓ Selected: '+el.querySelector('.title').textContent;}
+function submitPoll(){if(!selectedPoll){const fb=document.getElementById('poll-feedback');fb.className='feedback err show';fb.textContent='Please select a field before continuing.';return;}
+const labels={altenpflege:'Altenpflege (Elderly Care)',krankenpflege:'Krankenpflege (General Nursing)',kinderkrankenpflege:'Kinderkrankenpflege (Pediatric Nursing)'};
+const fb=document.getElementById('poll-feedback');fb.className='feedback ok show';fb.innerHTML='<strong>Shukriya!</strong> Aapne <strong>'+labels[selectedPoll]+'</strong> select kiya. Agle slide par free consultation book karein ya chat karein.';document.getElementById('poll-status').textContent='✓ Recorded';document.getElementById('poll-continue').textContent='Consultation Book Karein →';document.getElementById('poll-continue').onclick=()=>go(5);}
+</script>
+
+</body>
+</html>
