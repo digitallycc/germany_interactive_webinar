@@ -15,7 +15,7 @@
     --grey-3:#737373;
   }
   body{
-    width:1200px;height:1200px;overflow:hidden;
+    width:800px;height:1200px;overflow:hidden;
     background:var(--paper);color:var(--ink);
     font-family:'Inter',system-ui,sans-serif;
     position:relative;
@@ -30,19 +30,19 @@
 
   .accent-block{
     position:absolute;top:0;left:0;right:0;
-    height:480px;background:var(--accent);z-index:1;
+    height:540px;background:var(--accent);z-index:1;
   }
 
   .canvas{
     position:relative;z-index:2;
-    width:1200px;height:1200px;
-    padding:0 80px;
+    width:800px;height:1200px;
+    padding:0 60px;
     display:flex;flex-direction:column;
   }
 
   /* Top accent section */
   .top{
-    height:480px;display:flex;flex-direction:column;
+    height:540px;display:flex;flex-direction:column;
     justify-content:center;color:#fff;
   }
 
@@ -55,7 +55,7 @@
   .kicker::before{content:"";width:32px;height:2px;background:rgba(255,255,255,.5)}
 
   .title{
-    font-weight:200;font-size:96px;line-height:.98;
+    font-weight:200;font-size:82px;line-height:.98;
     letter-spacing:-.04em;color:#fff;
   }
   .title em{
@@ -70,7 +70,7 @@
   }
 
   .stats-row{
-    display:flex;gap:48px;margin-bottom:48px;
+    display:flex;gap:24px;margin-bottom:40px;
   }
 
   .stat{
@@ -78,7 +78,7 @@
     border-top:3px solid var(--accent);
   }
   .stat .value{
-    font-weight:800;font-size:48px;line-height:1;
+    font-weight:800;font-size:38px;line-height:1;
     letter-spacing:-.03em;font-feature-settings:"tnum";
     color:var(--ink);margin-bottom:6px;
   }
@@ -91,7 +91,7 @@
   .divider{width:100%;height:1px;background:var(--grey-2);margin-bottom:40px}
 
   .subtitle{
-    font-size:22px;font-weight:400;line-height:1.6;
+    font-size:18px;font-weight:400;line-height:1.6;
     color:var(--grey-3);letter-spacing:-.005em;
     max-width:900px;
   }
