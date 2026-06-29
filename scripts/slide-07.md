@@ -5,7 +5,7 @@
 
 ---
 
-Aur ab sab se ahem sawaal — kya aap apni zindagi ka ek ahem faisla aaj karna chahain ge?
+Aap ne sab kuch sun liya — opportunities, stipend, zero blocked account. Ab koi sawaal nahi hai. Ab sirf ek faisla hai. Aur wo faisla aap ne aaj karna hai.
 
 Sirf 9+ mahinon mein aap Germany mein ho sakte hain. Yeh koi door ki soch nahi hai. Yeh ek reality hai jo aap choose kar sakte hain.
 
