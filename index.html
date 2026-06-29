@@ -292,31 +292,33 @@
   }
   #audio-bar{
     position:fixed;bottom:0;left:0;right:0;
-    height:56px;z-index:60;
+    height:56px;max-height:56px;overflow:hidden;z-index:60;
     background:var(--ink);color:var(--paper);
-    display:flex;align-items:center;gap:12px;
-    padding:0 16px;
-    font-family:var(--mono);font-size:14px;
+    display:flex;align-items:stretch;gap:8px;
+    padding:0 12px;
+    font-family:var(--mono);font-size:14px;line-height:1;
     user-select:none;-webkit-user-select:none;
   }
   #audio-play-btn{
-    flex:0 0 auto;width:36px;height:36px;padding:0;
+    flex:0 0 36px;width:36px;height:auto;padding:0;margin:0;
     display:flex;align-items:center;justify-content:center;
     background:var(--accent);color:var(--accent-on);
     border:0;cursor:pointer;font-size:18px;line-height:1;
     transition:opacity .2s;
   }
   #audio-play-btn:hover{opacity:.88}
-  .audio-progress-wrap{flex:1;display:flex;align-items:center}
+  .audio-progress-wrap{flex:1;display:flex;align-items:center;min-width:0}
   #audio-progress{
     -webkit-appearance:none;appearance:none;
     width:100%;height:4px;border:0;border-radius:2px;
     background:rgba(255,255,255,.2);outline:0;cursor:pointer;
+    margin:0;padding:0;
   }
   #audio-progress::-webkit-slider-thumb{
     -webkit-appearance:none;appearance:none;
     width:12px;height:12px;border-radius:50%;
     background:var(--accent-on);cursor:pointer;border:0;
+    margin:0;padding:0;
   }
   #audio-progress::-moz-range-thumb{
     width:12px;height:12px;border-radius:50%;
@@ -325,17 +327,17 @@
   #audio-progress::-webkit-slider-runnable-track{height:4px}
   #audio-time{
     flex:0 0 auto;font-size:12px;opacity:.7;white-space:nowrap;
-    min-width:90px;text-align:right;
+    min-width:80px;text-align:right;line-height:1;
   }
   #audio-label{
     flex:0 0 auto;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
-    opacity:.5;white-space:nowrap;
+    opacity:.5;white-space:nowrap;line-height:1;
     max-width:160px;overflow:hidden;text-overflow:ellipsis;
   }
   @media (max-width:900px){
-    #audio-bar{height:48px;padding:0 10px;gap:8px}
-    #audio-play-btn{width:32px;height:32px;font-size:16px}
-    #audio-time{font-size:11px;min-width:75px}
+    #audio-bar{height:48px;max-height:48px;padding:0 8px;gap:6px}
+    #audio-play-btn{flex:0 0 32px;width:32px;font-size:16px}
+    #audio-time{font-size:11px;min-width:65px}
     #audio-label{display:none}
   }
 </style>
