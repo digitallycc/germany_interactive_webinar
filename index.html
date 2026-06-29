@@ -738,7 +738,7 @@ var labels=['Hook','Reality Check','Objections Answered','Eligibility','Tracks',
 
 function loadSlide(i,autoplay){
   curIdx=i;
-  var s='audio/slide-'+(i+1).toString().padStart(2,'0')+'.mp3?v=2';
+  var s='audio/slide-'+(i+1).toString().padStart(2,'0')+'.mp3?_='+Date.now();
   a.pause();
   a.src=s;
   a.load();
