@@ -62,9 +62,9 @@
   .slide.grey{background:var(--grey-1)}
   .slide.accent{background:var(--accent);color:var(--accent-on)}
 
-  .canvas-card{
+    .canvas-card{
     width:100vw;height:100vh;
-    padding:5.6vh 5vw 4.4vh;
+    padding:5.6vh 5vw 7.6vh;
     display:flex;flex-direction:column;
     position:relative;overflow:hidden;
   }
@@ -240,7 +240,7 @@
   .progress-bar{position:fixed;top:0;left:0;width:100%;height:3px;z-index:50;background:rgba(0,0,0,.06)}
   .progress-bar .fill{height:100%;background:var(--accent);transition:width .7s var(--ease-exp)}
 
-  #nav{position:fixed;left:50%;bottom:2vh;transform:translateX(-50%);z-index:30;display:flex;gap:10px;padding:0;background:transparent;border:0}
+  #nav{position:fixed;left:50%;bottom:calc(2vh + 56px);transform:translateX(-50%);z-index:30;display:flex;gap:10px;padding:0;background:transparent;border:0}
   #nav .dot{width:6px;height:6px;background:rgba(0,0,0,.28);cursor:pointer;transition:all .25s ease;border:0;padding:0;border-radius:0}
   #nav .dot:hover{background:rgba(0,0,0,.55)}
   #nav .dot.active{background:var(--accent);width:18px}
@@ -253,7 +253,7 @@
 
   @media (max-width:900px){
     .slide{overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
-    .canvas-card{padding:2.4vh 4vw 10vh;min-height:100vh;height:auto}
+    .canvas-card{padding:2.4vh 4vw 16vh;min-height:100vh;height:auto}
     .chrome-min{font-size:2.4vw;margin-bottom:var(--sp-4)}
     .h-xl{font-size:9vw;margin-bottom:1.6vh!important;line-height:1.08}
     .lead{font-size:4vw;line-height:1.45}
@@ -288,6 +288,55 @@
     .poll-option .title{font-size:3.8vw}
     .poll-option .desc{font-size:3.4vw;line-height:1.35}
     .btn-primary{padding:1.6vh 3.2vw;font-size:3vw}
+    #nav{bottom:calc(2vh + 48px)}
+  }
+  #audio-bar{
+    position:fixed;bottom:0;left:0;right:0;
+    height:56px;z-index:60;
+    background:var(--ink);color:var(--paper);
+    display:flex;align-items:center;gap:12px;
+    padding:0 16px;
+    font-family:var(--mono);font-size:14px;
+    user-select:none;-webkit-user-select:none;
+  }
+  #audio-play-btn{
+    flex:0 0 auto;width:36px;height:36px;padding:0;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--accent);color:var(--accent-on);
+    border:0;cursor:pointer;font-size:18px;line-height:1;
+    transition:opacity .2s;
+  }
+  #audio-play-btn:hover{opacity:.88}
+  .audio-progress-wrap{flex:1;display:flex;align-items:center}
+  #audio-progress{
+    -webkit-appearance:none;appearance:none;
+    width:100%;height:4px;border:0;border-radius:2px;
+    background:rgba(255,255,255,.2);outline:0;cursor:pointer;
+  }
+  #audio-progress::-webkit-slider-thumb{
+    -webkit-appearance:none;appearance:none;
+    width:12px;height:12px;border-radius:50%;
+    background:var(--accent-on);cursor:pointer;border:0;
+  }
+  #audio-progress::-moz-range-thumb{
+    width:12px;height:12px;border-radius:50%;
+    background:var(--accent-on);cursor:pointer;border:0;
+  }
+  #audio-progress::-webkit-slider-runnable-track{height:4px}
+  #audio-time{
+    flex:0 0 auto;font-size:12px;opacity:.7;white-space:nowrap;
+    min-width:90px;text-align:right;
+  }
+  #audio-label{
+    flex:0 0 auto;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    opacity:.5;white-space:nowrap;
+    max-width:160px;overflow:hidden;text-overflow:ellipsis;
+  }
+  @media (max-width:900px){
+    #audio-bar{height:48px;padding:0 10px;gap:8px}
+    #audio-play-btn{width:32px;height:32px;font-size:16px}
+    #audio-time{font-size:11px;min-width:75px}
+    #audio-label{display:none}
   }
 </style>
 </head>
@@ -657,7 +706,21 @@ function playSlide(i){const slide=slideEls[i];if(!slide)return;lastIdx=i;if(wind
 window.__playSlide=playSlide;playSlide(window.__currentSlideIndex||0);}
 </script>
 
-<script>
+<script type="module">
+const a=new Audio;a.preload='metadata';
+const bar=document.createElement('div');bar.id='audio-bar';
+bar.innerHTML='<button id="audio-play-btn" aria-label="Play/Pause">\u25B6</button><div class="audio-progress-wrap"><input type="range" id="audio-progress" min="0" max="100" value="0" aria-label="Seek"></div><span id="audio-time">0:00 / 0:00</span><span id="audio-label"></span>';
+document.body.appendChild(bar);
+const pb=document.getElementById('audio-play-btn'),pr=document.getElementById('audio-progress'),td=document.getElementById('audio-time'),lb=document.getElementById('audio-label');
+const labels=['Hook','Reality Check','Objections Answered','Eligibility','Tracks','Pathway','CTA'];
+let ui=false;
+function load(i){const s='audio/slide-'+(i+1).toString().padStart(2,'0')+'.mp3';if(a.src.endsWith(s))return;a.src=s;a.load();pr.value=0;td.textContent='0:00 / 0:00';pb.textContent='\u25B6';lb.textContent=labels[i]||''}
+function fmt(t){if(!isFinite(t))return'0:00';const m=Math.floor(t/60),s=Math.floor(t%60);return m+':'+(s<10?'0':'')+s}
+pb.onclick=()=>{if(a.paused){a.play().then(()=>{ui=true;pb.textContent='\u23F8'}).catch(()=>{})}else{a.pause();pb.textContent='\u25B6'}};
+pr.oninput=()=>{if(a.duration)a.currentTime=pr.value/100*a.duration};
+a.ontimeupdate=()=>{if(a.duration){pr.value=a.currentTime/a.duration*100;td.textContent=fmt(a.currentTime)+' / '+fmt(a.duration)}};
+a.onended=()=>{pb.textContent='\u21BB';pr.value=0};
+const os=window.__playSlide;if(os){window.__playSlide=function(i){load(i);if(ui){a.play().then(()=>{pb.textContent='\u23F8'}).catch(()=>{pb.textContent='\u25B6'})}return os(i)};load(window.__currentSlideIndex||0)}
 </script>
 
 </body>
