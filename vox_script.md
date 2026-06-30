@@ -131,7 +131,7 @@ Hum aap ko **muft 1-on-1 consultation** dete hain. Sirf 20 minute. Zero commitme
 
 Hum aap ki eligibility check karein ge, aap ke sawaalon ke jawab dein ge, aur aap ko ek clear roadmap dein ge.
 
-**Aaj hi humein WhatsApp karein — 0323 1525249 — aur message mein "COFFEE" likhein.**
+**Aaj hi humein WhatsApp karein — 0319 5228259 — aur message mein "COFFEE" likhein.**
 
 Ya phir link par click karein aur apni consultation book karwain.
 
